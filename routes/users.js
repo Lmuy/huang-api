@@ -1,13 +1,14 @@
-const router = require('koa-router')()
+import Router from 'koa-router';
+import UserController from "../controller/userController";
+import verify from '../middleware/verify';
 
-router.prefix('/users')
+const router = new Router();
 
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
-})
+router.prefix('/api/user');
 
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
-})
+router
+  .get('/getAll', UserController.getAllUser)
+  .post('/saveUser', verify, UserController.saveUser)
+  .get('/getUserById', UserController.getUserById)
 
-module.exports = router
+export default router;
